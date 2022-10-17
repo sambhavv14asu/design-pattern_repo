@@ -4,4 +4,11 @@ public class Buyer extends Person{
     void showMenu() {
 
     }
+
+    @Override
+    ProductMenu createProductMenu() {
+
+        return null;
+    }
 }
+

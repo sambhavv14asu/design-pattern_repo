@@ -9,4 +9,6 @@ public interface ProductMenu {
     public abstract void showRadioButton();
 
     public abstract void showLabels();
+
+    void showComboxes();
 }

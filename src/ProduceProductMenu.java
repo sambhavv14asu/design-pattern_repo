@@ -25,4 +25,8 @@ public class ProduceProductMenu implements ProductMenu{
 
     }
 
+    @Override
+    public void showComboxes() {
+
+    }
 }

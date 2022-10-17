@@ -1,4 +1,4 @@
-public class ClassProductList {
+public class Trading {
 
     void accept(NodeVisitor visitor) {
 
