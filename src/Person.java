@@ -1,5 +1,8 @@
 public abstract class Person {
 
+    int type ;
+    public String userName;
+
     private ProductMenu theProductMenu;
 
     public void showAddButton() {

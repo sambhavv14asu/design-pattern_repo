@@ -1,3 +1,10 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
 public class Facade {
 
     private int UserType;
@@ -11,7 +18,29 @@ public class Facade {
     private Person thePerson;
 
     public boolean login() {
-        return false;
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter your username: ");
+
+        String username = scanner.nextLine().trim();
+
+        System.out.println("Enter password: ");
+        String password = scanner.nextLine().trim();
+
+        if(buyerSellerDatabase.buyerDatabase.containsKey(username) &&
+                buyerSellerDatabase.buyerDatabase.get(username).equals(password)) {
+            thePerson.type = 0;
+            thePerson.userName = username;
+            return true;
+        } else if(buyerSellerDatabase.sellerDatabase.containsKey(username) &&
+                buyerSellerDatabase.sellerDatabase.get(username).equals(password)) {
+            thePerson.type = 1;
+            thePerson.userName=username;
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     public void addTrading() {
@@ -22,7 +51,7 @@ public class Facade {
 
     }
 
-    public void decideBidding() {
+    public void decideBidding(Offering offer) {
 
     }
 
