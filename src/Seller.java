@@ -1,5 +1,8 @@
 public class Seller extends Person{
 
+    Seller(){
+        this.userProductList=new ClassProductList();
+    }
     @Override
     void showMenu() {
 

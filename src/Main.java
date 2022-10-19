@@ -7,7 +7,10 @@ public class Main {
             System.out.println("Welcome to the PTBS");
         } else {
             System.out.println("No credentials found for the username");
+            return;
         }
-
+        f.createProductList();
+        System.out.println("----");
+        f.attachProductToUser();
     }
 }

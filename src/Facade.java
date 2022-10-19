@@ -1,9 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Facade {
 
@@ -17,6 +15,7 @@ public class Facade {
 
     private Person thePerson;
 
+
     public boolean login() {
 
         Scanner scanner = new Scanner(System.in);
@@ -26,21 +25,13 @@ public class Facade {
 
         System.out.println("Enter password: ");
         String password = scanner.nextLine().trim();
-
-        if(buyerSellerDatabase.buyerDatabase.containsKey(username) &&
-                buyerSellerDatabase.buyerDatabase.get(username).equals(password)) {
-            thePerson.type = 0;
-            thePerson.userName = username;
-            return true;
-        } else if(buyerSellerDatabase.sellerDatabase.containsKey(username) &&
-                buyerSellerDatabase.sellerDatabase.get(username).equals(password)) {
-            thePerson.type = 1;
-            thePerson.userName=username;
-            return true;
-        } else {
+        int type = Login.validateLogin(username,password);
+        if(type==-1){
             return false;
         }
-
+        UserInfoItem item = new UserInfoItem(type,username);
+        createUser(item);
+        return true;
     }
 
     public void addTrading() {
@@ -68,15 +59,68 @@ public class Facade {
     }
 
     public void createUser(UserInfoItem userinfoitem) {
-
+        if(userinfoitem.type==0){
+            thePerson=new Buyer();
+        }else{
+            thePerson=new Seller();
+        }
+        thePerson.userName=userinfoitem.username;
     }
 
     public void createProductList() {
-
+        theProductList=new ClassProductList();
+        Map<String,String> products = new HashMap<>();
+        try {
+            URL path = Facade.class.getResource("ProductInfo.txt");
+            File userProduct = new File(path.getFile());
+            Scanner myReader = new Scanner(userProduct);
+            while (myReader.hasNextLine()) {
+                String data[] = myReader.nextLine().split(":");
+                if(!products.containsKey(data[1])){
+                    products.put(data[1],data[0]);
+                }
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        for(String key:products.keySet()){
+            theProductList.add(new Product(key,products.get(key)));
+        }
+        for(Product p:theProductList){
+            System.out.println(p.name+" "+p.type);
+        }
     }
 
-    public void AttachProductToUser() {
-
+    public void attachProductToUser() {
+        HashSet<String> userProducts = new HashSet<>();
+        try {
+            URL path = Facade.class.getResource("UserProduct.txt");
+            File userProduct = new File(path.getFile());
+            Scanner myReader = new Scanner(userProduct);
+            while (myReader.hasNextLine()) {
+                String data[] = myReader.nextLine().split(":");
+                if(data[0].equals(thePerson.userName)){
+                    userProducts.add(data[1]);
+                }
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        for(String item:userProducts){
+            for(Product p :theProductList){
+                if(p.name.equals(item)){
+                    thePerson.userProductList.add(p);
+                    break;
+                }
+            }
+        }
+        for(Product p :thePerson.userProductList){
+            System.out.println(p.name+" "+p.type);
+        }
     }
 
     public Product SelectProduct() {

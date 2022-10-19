@@ -1,10 +1,10 @@
 public abstract class Person {
 
-    int type ;
     public String userName;
 
     private ProductMenu theProductMenu;
 
+    public ClassProductList userProductList;
     public void showAddButton() {
 
     }
