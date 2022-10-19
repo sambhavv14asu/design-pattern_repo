@@ -5,13 +5,22 @@ public class Buyer extends Person{
     }
     @Override
     void showMenu() {
-
+        showAddButton();
+        showLabels();
+        showViewButton();
+        showRadioButton();
     }
 
+    //factory pattern to decide the instance of productMenu based n category
     @Override
-    ProductMenu createProductMenu() {
+    ProductMenu createProductMenu(Product product) {
 
-        return null;
+        if(product.category==0){
+            theProductMenu=new MeatProductMenu();
+        }else{
+            theProductMenu=new ProduceProductMenu();
+        }
+        return theProductMenu;
     }
 }
 

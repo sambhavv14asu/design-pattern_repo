@@ -2,7 +2,7 @@ public abstract class Person {
 
     public String userName;
 
-    private ProductMenu theProductMenu;
+    protected ProductMenu theProductMenu;
 
     public ClassProductList userProductList;
     public void showAddButton() {
@@ -21,5 +21,5 @@ public abstract class Person {
     }
     abstract void showMenu();
 
-    abstract ProductMenu createProductMenu();
+    abstract ProductMenu createProductMenu(Product product);
 }

@@ -1,3 +1,6 @@
+//Used for implementing the factory method where we decide which instance of ProductMenu to
+// instantiate depending on product type
+
 public interface ProductMenu {
 
     public abstract void showMenu();

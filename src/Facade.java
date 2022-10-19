@@ -69,7 +69,7 @@ public class Facade {
 
     public void createProductList() {
         theProductList=new ClassProductList();
-        Map<String,String> products = new HashMap<>();
+        Map<String,Integer> products = new HashMap<>();
         try {
             URL path = Facade.class.getResource("ProductInfo.txt");
             File userProduct = new File(path.getFile());
@@ -77,7 +77,7 @@ public class Facade {
             while (myReader.hasNextLine()) {
                 String data[] = myReader.nextLine().split(":");
                 if(!products.containsKey(data[1])){
-                    products.put(data[1],data[0]);
+                    products.put(data[1],data[0].equals("Meat")? 0:1);
                 }
             }
             myReader.close();
@@ -89,7 +89,7 @@ public class Facade {
             theProductList.add(new Product(key,products.get(key)));
         }
         for(Product p:theProductList){
-            System.out.println(p.name+" "+p.type);
+            System.out.println(p.name+" "+p.category);
         }
     }
 
@@ -119,7 +119,7 @@ public class Facade {
             }
         }
         for(Product p :thePerson.userProductList){
-            System.out.println(p.name+" "+p.type);
+            System.out.println(p.name+" "+p.category);
         }
     }
 
