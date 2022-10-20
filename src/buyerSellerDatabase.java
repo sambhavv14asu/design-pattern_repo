@@ -39,4 +39,7 @@ public class buyerSellerDatabase {
         }
 
     }
+
+    public static void remove(Offering sellerOffer, Offering buyerOffer) {
+    }
 }

@@ -5,4 +5,8 @@ public class Product {
         this.name=name;
         this.category=category;
     }
+    Product(){
+
+    }
+
 }

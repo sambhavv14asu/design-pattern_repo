@@ -5,15 +5,18 @@ import java.util.*;
 
 public class Facade {
 
-    private int UserType;
+    //Buyer :0, Seller:1
+    static public int UserType;
 
     private Product theSelectedProduct;
 
     private int nProductCategory;
 
-    private ClassProductList theProductList;
+    static ClassProductList theProductList=new ClassProductList();;
 
-    private Person thePerson;
+    private OfferingList offers;
+
+    static Person thePerson;
 
 
     public boolean login() {
@@ -26,6 +29,7 @@ public class Facade {
         System.out.println("Enter password: ");
         String password = scanner.nextLine().trim();
         int type = Login.validateLogin(username,password);
+        UserType=type;
         if(type==-1){
             return false;
         }
@@ -34,24 +38,73 @@ public class Facade {
         return true;
     }
 
-    public void addTrading() {
+    public void addTrading(Product product) {
+        TradingMenu trademenu;
+        if (UserType == 0) {
+
+            trademenu = new BuyerTradingMenu();
+        }
+
+        else {
+            trademenu = new SellerTradingMenu();
+        }
+
+
+        Trading trade = new Trading();
+        trade.product=product;
+        trademenu.add(trade, thePerson);
 
     }
 
-    public void viewTrading() {
-
+    public void viewTrading(Trading trade) {
+        TradingMenu trademenu;
+        if(UserType == 0) {
+            trademenu = new BuyerTradingMenu();
+        }
+        else {
+            trademenu = new SellerTradingMenu();
+        }
+        trademenu.show(trade, thePerson );
     }
 
     public void decideBidding(Offering offer) {
-
+        offer.show();
     }
 
-    public void discussBidding() {
+    public void discussBidding(Offering sellerOffer,Offering buyerOffer) {
+
+        if(buyerOffer.price>=sellerOffer.price){
+            if(buyerOffer.startDate.compareTo(sellerOffer.endDate)<=0){
+                buyerOffer.flag=1;
+                buyerSellerDatabase.remove(sellerOffer,buyerOffer);
+            }else{
+                buyerOffer.flag=-1;
+            }
+        }else{
+            if(buyerOffer.startDate.compareTo(sellerOffer.endDate)<=0){
+                buyerOffer.flag=0;
+            }else{
+                buyerOffer.flag=-1;
+            }
+        }
 
     }
 
     public void submitBidding() {
-
+        if(UserType==1){
+            System.out.println("Only buyers can submit offerings");
+        }else{
+            Product p =new Product();
+            Scanner scn=new Scanner(System.in);
+            System.out.println("Enter product name");
+            p.name=scn.nextLine();
+            System.out.println("Enter category of product: 0 for meat, 1 for produce");
+            p.category=scn.nextInt();
+            System.out.println("Enter the price for offering");
+            int price = scn.nextInt();
+            Offering buyOffer = new Offering(p,price);
+            offers.add(buyOffer);
+        }
     }
 
     public void remind() {
@@ -67,8 +120,7 @@ public class Facade {
         thePerson.userName=userinfoitem.username;
     }
 
-    public void createProductList() {
-        theProductList=new ClassProductList();
+    public ClassProductList createProductList() {
         Map<String,Integer> products = new HashMap<>();
         try {
             URL path = Facade.class.getResource("ProductInfo.txt");
@@ -88,9 +140,7 @@ public class Facade {
         for(String key:products.keySet()){
             theProductList.add(new Product(key,products.get(key)));
         }
-        for(Product p:theProductList){
-            System.out.println(p.name+" "+p.category);
-        }
+        return theProductList;
     }
 
     public void attachProductToUser() {
@@ -118,9 +168,6 @@ public class Facade {
                 }
             }
         }
-        for(Product p :thePerson.userProductList){
-            System.out.println(p.name+" "+p.category);
-        }
     }
 
     public Product SelectProduct() {
@@ -128,6 +175,14 @@ public class Facade {
     }
 
     public void productOperation() {
+
+    }
+
+    public void runSystem() {
+        ClassProductList l = createProductList();
+        attachProductToUser();
+        ProductMenu menu = thePerson.createProductMenu();
+        thePerson.showMenu(menu);
 
     }
 }

@@ -6,20 +6,20 @@ public abstract class Person {
 
     public ClassProductList userProductList;
     public void showAddButton() {
-
+        theProductMenu.showAddButton();
     }
 
     public void showViewButton() {
-
+        theProductMenu.showViewButton();
     }
 
     public void showRadioButton() {
-
+        theProductMenu.showRadioButton();
     }
     public void showLabels() {
-
+        theProductMenu.showLabels();
     }
-    abstract void showMenu();
+    abstract void showMenu(ProductMenu menu);
 
-    abstract ProductMenu createProductMenu(Product product);
+    abstract ProductMenu createProductMenu();
 }

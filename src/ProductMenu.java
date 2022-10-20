@@ -1,7 +1,9 @@
 //Used for implementing the factory method where we decide which instance of ProductMenu to
 // instantiate depending on product type
 
-public interface ProductMenu {
+public abstract class ProductMenu {
+
+    ClassProductList items=new ClassProductList();
 
     public abstract void showMenu();
 
@@ -13,5 +15,5 @@ public interface ProductMenu {
 
     public abstract void showLabels();
 
-    void showComboxes();
+    public abstract void showComboxes();
 }
