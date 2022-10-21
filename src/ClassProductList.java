@@ -6,6 +6,8 @@ public class ClassProductList extends ArrayList<Product> {
         super();
     }
     void accept(NodeVisitor visitor) {
-
+        for(Product p:this){
+            p.accept(visitor);
+        }
     }
 }

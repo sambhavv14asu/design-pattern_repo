@@ -107,8 +107,13 @@ public class Facade {
         }
     }
 
-    public void remind() {
-
+    public void remindAllProducts() {
+        RemindVisitor v = new RemindVisitor();
+        v.visitFacade(this);
+    }
+    public void remindProduct(Product product){
+        RemindVisitor v = new RemindVisitor();
+        v.visitProduct(product);
     }
 
     public void createUser(UserInfoItem userinfoitem) {
@@ -181,8 +186,28 @@ public class Facade {
     public void runSystem() {
         ClassProductList l = createProductList();
         attachProductToUser();
+        System.out.println("Using the bridge pattern to implement the functionality of buyer or seller based on login details");
+        System.out.println("-----");
+        if(UserType == 0) {
+            System.out.println("Creating the product menu for buyer");
+        }else{
+            System.out.println("Creating the product menu for seller");
+        }
         ProductMenu menu = thePerson.createProductMenu();
+        System.out.println("-----");
+        System.out.println("Used factory pattern to create the meat or produce menu based on category passed");
+        System.out.println("-----");
+        System.out.println("Showing the menu");
+        System.out.println("-----");
+        System.out.println("Using the iterator pattern to iterate over the product lists");
+        System.out.println("-----");
         thePerson.showMenu(menu);
+
+        Product p = new Product();
+        p.trades.add(new Trading("Trade1",new Date()));
+        p.trades.add(new Trading("Trade2",new Date()));
+        remindProduct(p);
+
 
     }
 }
