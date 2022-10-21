@@ -1,3 +1,4 @@
+//Using visitor pattern for reminders of trades based on the data structure passed
 public class RemindVisitor extends NodeVisitor{
 
     Reminder m_Reminder = new Reminder();

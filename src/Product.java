@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Product {
 
@@ -8,6 +9,7 @@ public class Product {
     Product(String name,int category){
         this.name=name;
         this.category=category;
+        trades.add(new Trading("Trade"+name,new Date()));
     }
     Product(){
 

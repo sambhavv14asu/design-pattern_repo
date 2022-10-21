@@ -37,7 +37,6 @@ public class buyerSellerDatabase {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-
     }
 
     public static void remove(Offering sellerOffer, Offering buyerOffer) {

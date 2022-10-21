@@ -90,7 +90,7 @@ public class Facade {
 
     }
 
-    public void submitBidding() {
+    public void submitBidding(Trading Trade, Product product) {
         if(UserType==1){
             System.out.println("Only buyers can submit offerings");
         }else{
@@ -184,6 +184,7 @@ public class Facade {
     }
 
     public void runSystem() {
+        Scanner scn=new Scanner(System.in);
         ClassProductList l = createProductList();
         attachProductToUser();
         System.out.println("Using the bridge pattern to implement the functionality of buyer or seller based on login details");
@@ -202,11 +203,11 @@ public class Facade {
         System.out.println("Using the iterator pattern to iterate over the product lists");
         System.out.println("-----");
         thePerson.showMenu(menu);
-
-        Product p = new Product();
-        p.trades.add(new Trading("Trade1",new Date()));
-        p.trades.add(new Trading("Trade2",new Date()));
-        remindProduct(p);
+        System.out.println("-----");
+        System.out.println("implementing the visitor pattern to send reminders for trades");
+        System.out.println("-----");
+        System.out.println("Reminders for all the trades related to your products");
+        remindAllProducts();
 
 
     }
